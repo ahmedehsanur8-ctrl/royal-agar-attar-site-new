@@ -968,8 +968,8 @@ html.locked .fab{opacity:0;pointer-events:none}
     <div class="done" hidden>
       <div class="ic"><svg><use href="#i-mark"/></svg></div>
       <h2>Request ready</h2>
-      <p>Thanks, <span data-first>there</span>. WhatsApp has opened with your request written out. Press send and we usually reply the same day. If it didn't open, message us at +880 1819 420122.</p>
-      <button class="pill dark" data-quote-close><span>Done</span></button>
+      <p>Thanks, <span data-first>there</span>. Your request is written out in WhatsApp. If it didn't open by itself, tap Open WhatsApp, then press send and we usually reply the same day. Or message us at +880 1819 420122.</p>
+      <div class="fbtns"><a class="pill dark arrow" href="#" data-wa-done target="_blank" rel="noopener"><span>Open WhatsApp<span class="badge"><svg class="aur"><use href="#i-aur"/></svg></span></span></a><button class="pill outline" data-quote-close><span>Done</span></button></div>
     </div>
   </div>
 </div>
@@ -1320,7 +1320,9 @@ $$('.qa').forEach(d => d.addEventListener('toggle', () => { if (d.open) $$('.qa'
       v('message') && 'Notes: ' + v('message'),
     ].filter(Boolean);
     track('generate_lead', { lead_source:'quote_form', oil:v('oil'), quantity:v('qty'), country:v('country'), buyer_type:v('buyer') });
-    window.open(waLink(lines.join('\n')), '_blank', 'noopener');
+    const url = waLink(lines.join('\n'));
+    $('[data-wa-done]', done).href = url;
+    try { window.open(url, '_blank', 'noopener'); } catch (_) {}
     $('[data-first]', done).textContent = v('name').split(/\s+/)[0] || 'there';
     form.hidden = true; done.hidden = false;
   });
